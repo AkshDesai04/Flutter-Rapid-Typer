@@ -39,6 +39,7 @@ class _MyKeyExampleState extends State<MyKeyExample> {
 
   String getChar(String data) {
     if (data.indexOf("Key ") == 0) data = data[4];
+    if (data.indexOf("Digit ") == 0) data = data[6];
     print(data);
     return data;
   }
