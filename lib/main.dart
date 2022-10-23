@@ -37,6 +37,12 @@ class _MyKeyExampleState extends State<MyKeyExample> {
     super.dispose();
   }
 
+  String getChar(String data) {
+    if (data.indexOf("Key ") == 0) data = data[4];
+    print(data);
+    return data;
+  }
+
   // Handles the key events from the Focus widget and updates the
   // _message.
   KeyEventResult _handleKeyEvent(FocusNode node, RawKeyEvent event) {
@@ -49,7 +55,8 @@ class _MyKeyExampleState extends State<MyKeyExample> {
         } else {
           // As the name implies, the debugName will only print useful
           // information in debug mode.
-          _message = '$_message${event.logicalKey.debugName}';
+          // _message = '$_message${event.logicalKey.debugName}';
+          _message = getChar('${event.logicalKey.debugName}');
         }
       }
     });
