@@ -26,7 +26,8 @@ class MyKeyExample extends StatefulWidget {
 }
 
 class _MyKeyExampleState extends State<MyKeyExample> {
-  String testtext = "hello this is aksh desai";
+  Stopwatch stopwatch = Stopwatch();
+  String testtext = "two women were fighting over a child";
   String statusText = "Incomplete";
   // The node used to request the keyboard focus.
   final FocusNode _focusNode = FocusNode();
@@ -88,7 +89,9 @@ class _MyKeyExampleState extends State<MyKeyExample> {
         temp = getChar('${event.logicalKey.debugName}');
         _message = '$_message' + temp;
         if (_message.toLowerCase() == testtext.toLowerCase()) {
-          statusText = "Done";
+          stopwatch.stop();
+          statusText =
+              "Done" + (stopwatch.elapsedMilliseconds / 1000).toString();
           print("main:$testtext");
           print("curr:$_message");
         } else
@@ -123,6 +126,8 @@ class _MyKeyExampleState extends State<MyKeyExample> {
                   return GestureDetector(
                     onTap: () {
                       FocusScope.of(context).requestFocus(_focusNode);
+                      //stopwatch start
+                      stopwatch.start();
                     },
                     child: const Text(
                       "Let's Get Started\nClick Here",
@@ -138,7 +143,7 @@ class _MyKeyExampleState extends State<MyKeyExample> {
                         ),
                         child: Text(testtext)),
                     Text(
-                      _message ?? 'Press a key',
+                      _message,
                       style: TextStyle(
                         color: Colors.red,
                       ),
