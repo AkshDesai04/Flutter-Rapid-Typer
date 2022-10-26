@@ -12,22 +12,54 @@ class RapidTyper extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: const MyKeyExample(),
+        body: DataPage(),
+      ),
+    );
+  }
+}
+
+class DataPage extends StatelessWidget {
+  final tfc = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          TextField(
+            controller: tfc,
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyKeyExample(tfc.text)),
+                );
+              },
+              child: Text("Done"))
+        ],
       ),
     );
   }
 }
 
 class MyKeyExample extends StatefulWidget {
-  const MyKeyExample({super.key});
+  String text = "";
+  MyKeyExample(String text) {
+    this.text = text;
+  }
 
   @override
-  State<MyKeyExample> createState() => _MyKeyExampleState();
+  State<MyKeyExample> createState() => _MyKeyExampleState(text);
 }
 
 class _MyKeyExampleState extends State<MyKeyExample> {
+  String testtext = "";
+  _MyKeyExampleState(String text) {
+    testtext = text;
+  }
   Stopwatch stopwatch = Stopwatch();
-  String testtext = "two women were fighting over a child";
   String statusText = "Incomplete";
   // The node used to request the keyboard focus.
   final FocusNode _focusNode = FocusNode();
@@ -151,6 +183,11 @@ class _MyKeyExampleState extends State<MyKeyExample> {
                     Text(
                       statusText,
                     ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Back")),
                   ],
                 );
                 // return RichText(
