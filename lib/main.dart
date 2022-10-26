@@ -26,6 +26,8 @@ class MyKeyExample extends StatefulWidget {
 }
 
 class _MyKeyExampleState extends State<MyKeyExample> {
+  String testtext = "hello this is aksh desai";
+  String statusText = "Incomplete";
   // The node used to request the keyboard focus.
   final FocusNode _focusNode = FocusNode();
   // The message to display.
@@ -85,6 +87,12 @@ class _MyKeyExampleState extends State<MyKeyExample> {
         // information in debug mode.
         temp = getChar('${event.logicalKey.debugName}');
         _message = '$_message' + temp;
+        if (_message.toLowerCase() == testtext.toLowerCase()) {
+          statusText = "Done";
+          print("main:$testtext");
+          print("curr:$_message");
+        } else
+          statusText = "Incomplete";
       }
     });
     return event.logicalKey == LogicalKeyboardKey.keyQ
@@ -128,12 +136,15 @@ class _MyKeyExampleState extends State<MyKeyExample> {
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                         ),
-                        child: Text("hello world this is aksh desai")),
+                        child: Text(testtext)),
                     Text(
                       _message ?? 'Press a key',
                       style: TextStyle(
                         color: Colors.red,
                       ),
+                    ),
+                    Text(
+                      statusText,
                     ),
                   ],
                 );
