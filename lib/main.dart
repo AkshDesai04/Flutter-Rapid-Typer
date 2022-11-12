@@ -19,7 +19,15 @@ class RapidTyper extends StatelessWidget {
 }
 
 class DataPage extends StatelessWidget {
+  String generateText() {
+    String str = "";
+    str = "hello world";
+    return str;
+  }
+
   final tfc = TextEditingController();
+
+  DataPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,25 +37,40 @@ class DataPage extends StatelessWidget {
           TextField(
             controller: tfc,
           ),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyKeyExample(tfc.text)),
-                );
-              },
-              child: Text("Done"))
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyKeyExample(tfc.text)),
+                    );
+                  },
+                  child: const Text("Done")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyKeyExample(generateText())),
+                    );
+                  },
+                  child: const Text("Random Text")),
+            ],
+          ),
         ],
       ),
     );
   }
 }
 
+// ignore: must_be_immutable
 class MyKeyExample extends StatefulWidget {
   String text = "";
-  MyKeyExample(String text) {
-    this.text = text;
+  MyKeyExample(String text, {super.key}) {
+    this.text = text.trim().toLowerCase();
   }
 
   @override
@@ -65,8 +88,8 @@ class _MyKeyExampleState extends State<MyKeyExample> {
   final FocusNode _focusNode = FocusNode();
   // The message to display.
   String _message = "", temp = "";
-  var char_history = [];
-  int IDO = 0;
+  var charhistory = [];
+  int ido = 0;
   final int mi = -1;
 
   // Focus nodes need to be disposed.
@@ -96,11 +119,11 @@ class _MyKeyExampleState extends State<MyKeyExample> {
     if (data.indexOf("en") == 0) data = "\n"; //enter
     if (data.indexOf("ta") == 0) data = ""; //tab
 
-    IDO = char_history.indexOf(data);
-    print("outside index = $IDO");
+    ido = charhistory.indexOf(data);
+    print("outside index = $ido");
 
-    if (IDO < 0) {
-      char_history.add(data);
+    if (ido < 0) {
+      charhistory.add(data);
       if (data == "backspace") {
         //backspace
         _message = _message.substring(0, _message.length - 1);
@@ -108,7 +131,7 @@ class _MyKeyExampleState extends State<MyKeyExample> {
       }
       return data;
     }
-    char_history.remove(data);
+    charhistory.remove(data);
     if (data == "backspace") return "";
     return "";
   }
@@ -140,12 +163,12 @@ class _MyKeyExampleState extends State<MyKeyExample> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    double min_hw = min(height, width);
+    double minhw = min(height, width);
     return Container(
       color: Colors.white,
       alignment: Alignment.center,
       child: Padding(
-        padding: EdgeInsets.all(min_hw * 0.25),
+        padding: EdgeInsets.all(minhw * 0.25),
         child: DefaultTextStyle(
           style: textTheme.headline4!,
           child: Focus(
@@ -176,7 +199,7 @@ class _MyKeyExampleState extends State<MyKeyExample> {
                         child: Text(testtext)),
                     Text(
                       _message,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.red,
                       ),
                     ),
@@ -187,14 +210,9 @@ class _MyKeyExampleState extends State<MyKeyExample> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text("Back")),
+                        child: const Text("Back")),
                   ],
                 );
-                // return RichText(
-                //   text: TextSpan(
-                //     children: textspans,
-                //   ),
-                // );
               },
             ),
           ),
