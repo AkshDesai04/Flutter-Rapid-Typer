@@ -36,6 +36,13 @@ class DataPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          Text(
+            "Enter text to type or click the button to generate text",
+            style: TextStyle(
+              fontSize: 50,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           TextField(
             controller: tfc,
           ),
